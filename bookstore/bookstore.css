@@ -1,0 +1,40 @@
+html {
+    background-color: darkgrey;
+}
+
+.icon {
+    height: 100px;
+    width: 100px;
+}
+
+.main-title {
+    color: rgb(189, 187, 45);
+    font-size: 80px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 20px;
+}
+
+.header-container {
+    display: flex;
+    background: darkslategrey;
+}
+
+/* Review "@Media queries" and Responsive Web Design */
+
+.book-list {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    background-color: darkslateblue;
+ }
+
+ .book-card {
+    background-color: rgb(40, 33, 164);
+    text-align: center;
+    outline: 2px;
+    outline-style: groove;
+    border-radius: 3px;
+    margin: 10px;
+    padding: 30px;
+ }
