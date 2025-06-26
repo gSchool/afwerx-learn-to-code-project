@@ -3,9 +3,9 @@ import './App.css'
 
 export function App() {
   const [selectablePokemon, setSelectablePokemon] = useState([
-    {name: "pikachu"},
-    {name: "charmander"}, 
-    {name: "bulbasaur"}
+    { name: "pikachu" },
+    { name: "charmander" },
+    { name: "bulbasaur" }
   ])
 
   const [selectedPokemon, setSelectedPokemon] = useState({
@@ -28,27 +28,37 @@ export function App() {
   // let handleShowPokemonClick = function(){
   //   const dropdown = document.getElementById("pokemon-select");
   //   const selectedPokemon = dropdown.value;
-    
+
   //   setSelectedPokemon()
-    
+
   // };
 
   //IF TIME: use effect to show image of pokemon. when selected pokemon changes
   useEffect(() => {
-    if(selectedPokemon.name != "N/A"){
+    if (selectedPokemon.name != "N/A") {
       let currentSelectedPokemon = selectablePokemon.find(pokemon => pokemon.name == selectedPokemon.name);
       console.log(currentSelectedPokemon.url)
       fetch(currentSelectedPokemon.url)
         .then(response => response.json())
         .then(pokemonDetailData => {
           // console.log(pokemonDetailData.sprites.other.showdown.front_default);
-          setPokeImage({ url: pokemonDetailData.sprites.other.showdown.front_default})
+          let pokeurl = pokemonDetailData.sprites.other.showdown.front_default;
+          setPokeImage({ url: pokeurl })
+          fetch("http://pihub.local:8000/gif", {
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json', // Indicate that the body is JSON
+            },
+            body: JSON.stringify({ "pokeurl": pokeurl })
+          })
+            .then(res => res.json())
+            .then(result => console.log(result))
         })
     }
   }, [selectedPokemon])
 
 
-  let onPokemonChange = function(event){
+  let onPokemonChange = function (event) {
     // console.log(event.target.value)
     setSelectedPokemon({
       outputString: `You chose: ${event.target.value} using State!`,
@@ -74,8 +84,8 @@ export function App() {
       {/* <button id="show-button" onClick={handleShowPokemonClick}>Show Pokémon</button> */}
 
       <h2 id="pokemon-output">{selectedPokemon.outputString}</h2>
-      <br/>
-      <br/>
+      <br />
+      <br />
       <h2>{selectedPokemon.name.toUpperCase()}</h2>
       <img src={pokeImage.url} id="pokemon-image" alt="some text" />
     </>)
